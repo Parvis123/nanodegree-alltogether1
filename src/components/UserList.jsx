@@ -2,7 +2,13 @@ import React, { Component } from "react";
 
 class UserList extends Component {
   render() {
-    const { firstname, username, lastname, gamesplayed } = this.props;
+    const {
+      firstname,
+      username,
+      lastname,
+      gamesplayed,
+      showScores,
+    } = this.props;
     return (
       <div>
         {" "}
@@ -12,8 +18,10 @@ class UserList extends Component {
             return (
               <li key={user}>
                 <p>
-                  {username[i]} - ({firstname[i] + " " + lastname[i]}) has
-                  played {gamesplayed[i]} game(s).
+                  {username[i]} - ({firstname[i] + " " + lastname[i]})
+                  {showScores
+                    ? " has played " + gamesplayed[i] + " game(s)"
+                    : ""}
                 </p>
               </li>
             );

@@ -4,6 +4,7 @@ import "./App.css";
 import UserList from "./components/UserList";
 import AddUser from "./components/AddUser";
 import ErrorMessage from "./components/ErrorMessage";
+import Scores from "./components/Scores";
 
 class App extends Component {
   constructor(props) {
@@ -20,11 +21,22 @@ class App extends Component {
       ],
       gamesplayed: [0, 0, 0, 0, 0],
       errorStatus: "noError",
+      scoreStatus: "Hide Scores",
+      showScores: true,
     };
   }
 
+  updateScores = (updatedScores) => {
+    const { updateScoreStatus, updateShowScores } = updatedScores;
+
+    this.setState({
+      scoreStatus: updateScoreStatus,
+      showScores: updateShowScores,
+    });
+  };
+
   newUserUpdate = (newUser) => {
-    const { firstname, lastname, username } = this.state;
+    const { firstname, lastname, username, gamesplayed } = this.state;
     const { newfirstname, newlastname, newusername } = newUser;
 
     this.setState({
@@ -40,6 +52,7 @@ class App extends Component {
         firstname: [...firstname, newfirstname],
         lastname: [...lastname, newlastname],
         username: [...username, newusername],
+        gamesplayed: [...gamesplayed, 0],
       });
     }
   };
@@ -51,6 +64,8 @@ class App extends Component {
       username,
       gamesplayed,
       errorStatus,
+      showScores,
+      scoreStatus,
     } = this.state;
     return (
       <div className='App'>
@@ -58,11 +73,17 @@ class App extends Component {
           <img src={logo} className='App-logo' alt='logo' />
           <h1 className='App-title'>ReactND - Coding Practice</h1>
         </header>
+        <Scores
+          scoreStatus={scoreStatus}
+          showScores={showScores}
+          updateScores={this.updateScores}
+        />
         <UserList
           firstname={firstname}
           lastname={lastname}
           username={username}
           gamesplayed={gamesplayed}
+          showScores={showScores}
         />
         <ErrorMessage errorStatus={errorStatus} />
         <AddUser update={this.newUserUpdate} />
