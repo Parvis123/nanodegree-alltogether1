@@ -10,21 +10,9 @@ class AddUser extends Component {
     };
   }
 
-  handleUserNameChange = (event) => {
+  handleInputChange = (event) => {
     this.setState({
-      newusername: event.target.value,
-    });
-  };
-
-  handleFirstNameChange = (event) => {
-    this.setState({
-      newfirstname: event.target.value,
-    });
-  };
-
-  handleLastNameChange = (event) => {
-    this.setState({
-      newlastname: event.target.value,
+      [event.target.name]: event.target.value,
     });
   };
 
@@ -36,34 +24,38 @@ class AddUser extends Component {
   render() {
     return (
       <form>
-        <label for='user'>User Name: </label>
+        <label htmlFor='newusername'>User Name: </label>
         <input
           type='text'
-          name='user'
+          name='newusername'
           placeholder='Enter a user name'
-          onChange={this.handleUserNameChange}
+          onChange={this.handleInputChange}
         ></input>{" "}
         <br />
-        <label for='firstn'>First Name: </label>
+        <label htmlFor='newfirstname'>First Name: </label>
         <input
           type='text'
-          name='firstn'
+          name='newfirstname'
           placeholder='Enter a first name'
-          onChange={this.handleFirstNameChange}
+          onChange={this.handleInputChange}
         ></input>{" "}
         <br />
-        <label for='lastn'>Last Name: </label>
+        <label htmlFor='newlastname'>Last Name: </label>
         <input
           type='text'
-          name='lastn'
+          name='newlastname'
           placeholder='Enter a last name'
-          onChange={this.handleLastNameChange}
+          onChange={this.handleInputChange}
         ></input>{" "}
         <br />
         <input
           type='submit'
           value='Submit'
           disabled={!this.isSubmitDisabled()}
+          onClick={(e) => {
+            e.preventDefault();
+            this.props.update(this.state);
+          }}
         ></input>
       </form>
     );
